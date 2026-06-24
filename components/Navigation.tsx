@@ -1,192 +1,256 @@
 'use client'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useState, useEffect, useRef } from 'react'
 
 const links = [
-  { label: 'Experience', href: '#experience' },
+  { label: 'Work', href: '#experience' },
   { label: 'NextLine AI', href: '#nextline' },
   { label: 'Education', href: '#education' },
-  { label: 'Book a Call', href: '#book' },
+  { label: 'Book a call', href: '#book' },
   { label: 'Support', href: '#support' },
 ]
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
   return (
-    <nav
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        transition: 'background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
-        background: scrolled ? 'rgba(6,7,13,0.88)' : 'transparent',
-        borderBottom: scrolled ? '1px solid #1a1d2e' : '1px solid transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
-      }}
-    >
-      <div
+    <>
+      {/* Floating pill nav — centered, detached from edge */}
+      <nav
+        aria-label="Main navigation"
         style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 24px',
-          height: '68px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          position: 'fixed',
+          top: '16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 100,
+          width: 'calc(100% - 48px)',
+          maxWidth: '960px',
         }}
       >
-        <a
-          href="#top"
+        <div
           style={{
-            fontSize: '17px',
-            fontWeight: 700,
-            color: '#eef0ff',
-            textDecoration: 'none',
-            letterSpacing: '-0.02em',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '10px 10px 10px 22px',
+            borderRadius: '999px',
+            border: `1px solid ${scrolled ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)'}`,
+            background: scrolled
+              ? 'rgba(5,5,8,0.82)'
+              : 'rgba(5,5,8,0.5)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            transition: 'background 0.4s ease, border-color 0.4s ease',
+            boxShadow: scrolled ? '0 4px 32px rgba(0,0,0,0.4)' : 'none',
           }}
         >
-          Sahas<span style={{ color: '#4d8fff' }}>.</span>
-        </a>
-
-        {/* Desktop links */}
-        <div className="hidden md:flex" style={{ gap: '32px', alignItems: 'center' }}>
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              style={{
-                color: '#8896aa',
-                textDecoration: 'none',
-                fontSize: '14px',
-                fontWeight: 500,
-                transition: 'color 0.2s',
-              }}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = '#eef0ff')}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = '#8896aa')}
-            >
-              {l.label}
-            </a>
-          ))}
+          {/* Wordmark */}
           <a
-            href="https://www.linkedin.com/in/sahas-konreddy-ba0633344"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#top"
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              background: 'rgba(77,143,255,0.1)',
-              border: '1px solid rgba(77,143,255,0.3)',
-              borderRadius: '8px',
-              padding: '6px 14px',
-              color: '#4d8fff',
-              fontSize: '13px',
-              fontWeight: 600,
+              fontFamily: "'Archivo', sans-serif",
+              fontSize: '16px',
+              fontWeight: 800,
+              color: '#f0f2ff',
               textDecoration: 'none',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLElement
-              el.style.background = 'rgba(77,143,255,0.18)'
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLElement
-              el.style.background = 'rgba(77,143,255,0.1)'
+              letterSpacing: '-0.03em',
+              flexShrink: 0,
             }}
           >
-            LinkedIn
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
+            Sahas<span style={{ color: 'var(--blue)' }}>.</span>
           </a>
+
+          {/* Desktop links */}
+          <div
+            className="hidden md:flex"
+            style={{ alignItems: 'center', gap: '8px' }}
+          >
+            {links.slice(0, -1).map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                style={{
+                  color: 'var(--ash)',
+                  textDecoration: 'none',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  padding: '7px 14px',
+                  borderRadius: '999px',
+                  transition: 'color 0.2s ease, background 0.2s ease',
+                  letterSpacing: '-0.01em',
+                }}
+                onMouseEnter={(e) => {
+                  const t = e.currentTarget
+                  t.style.color = '#f0f2ff'
+                  t.style.background = 'rgba(255,255,255,0.07)'
+                }}
+                onMouseLeave={(e) => {
+                  const t = e.currentTarget
+                  t.style.color = 'var(--ash)'
+                  t.style.background = 'transparent'
+                }}
+              >
+                {l.label}
+              </a>
+            ))}
+
+            {/* CTA pill button */}
+            <a
+              href="#support"
+              className="btn-primary"
+              style={{ padding: '7px 7px 7px 16px', fontSize: '13px' }}
+            >
+              Support
+              <span className="btn-icon-wrap" style={{ width: '26px', height: '26px', marginLeft: '10px' }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: '50%',
+              width: '38px',
+              height: '38px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              color: '#f0f2ff',
+              transition: 'background 0.2s ease',
+              flexShrink: 0,
+            }}
+          >
+            <div style={{ position: 'relative', width: '16px', height: '12px' }}>
+              <span
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  width: '100%',
+                  height: '1.5px',
+                  background: 'currentColor',
+                  borderRadius: '2px',
+                  top: menuOpen ? '5px' : '0',
+                  transform: menuOpen ? 'rotate(45deg)' : 'none',
+                  transition: 'top 0.25s ease, transform 0.25s ease 0.1s',
+                }}
+              />
+              <span
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  width: '100%',
+                  height: '1.5px',
+                  background: 'currentColor',
+                  borderRadius: '2px',
+                  top: '5px',
+                  opacity: menuOpen ? 0 : 1,
+                  transition: 'opacity 0.15s ease',
+                }}
+              />
+              <span
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  width: '100%',
+                  height: '1.5px',
+                  background: 'currentColor',
+                  borderRadius: '2px',
+                  top: menuOpen ? '5px' : '10px',
+                  transform: menuOpen ? 'rotate(-45deg)' : 'none',
+                  transition: 'top 0.25s ease, transform 0.25s ease 0.1s',
+                }}
+              />
+            </div>
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden"
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '8px',
-            color: '#eef0ff',
-          }}
-        >
-          {menuOpen ? (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          ) : (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          )}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div
-          className="md:hidden"
-          style={{
-            background: 'rgba(14,16,24,0.98)',
-            borderTop: '1px solid #1a1d2e',
-            padding: '16px 24px 24px',
-          }}
-        >
-          {links.map((l) => (
+      {/* Mobile menu — full-screen glass overlay */}
+      <div
+        ref={menuRef}
+        className="md:hidden"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 99,
+          background: 'rgba(5,5,8,0.95)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '0 32px',
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? 'auto' : 'none',
+          transition: 'opacity 0.3s ease',
+        }}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          {links.map((l, i) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setMenuOpen(false)}
               style={{
-                display: 'block',
-                padding: '12px 0',
-                color: '#8896aa',
+                fontFamily: "'Archivo', sans-serif",
+                fontSize: 'clamp(28px, 6vw, 40px)',
+                fontWeight: 800,
+                letterSpacing: '-0.03em',
+                color: '#f0f2ff',
                 textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: 500,
-                borderBottom: '1px solid #1a1d2e',
+                padding: '12px 0',
+                borderBottom: '1px solid rgba(255,255,255,0.06)',
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+                transition: `opacity 0.4s ease ${i * 60}ms, transform 0.4s var(--ease-spring) ${i * 60}ms`,
               }}
             >
               {l.label}
             </a>
           ))}
-          <a
-            href="https://www.linkedin.com/in/sahas-konreddy-ba0633344"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'block',
-              padding: '12px 0',
-              color: '#4d8fff',
-              textDecoration: 'none',
-              fontSize: '16px',
-              fontWeight: 500,
-            }}
-          >
-            LinkedIn
-          </a>
         </div>
-      )}
-    </nav>
+
+        <a
+          href="https://www.linkedin.com/in/sahas-konreddy-ba0633344"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            marginTop: '40px',
+            color: 'var(--blue)',
+            textDecoration: 'none',
+            fontSize: '14px',
+            fontWeight: 600,
+            opacity: menuOpen ? 1 : 0,
+            transition: `opacity 0.4s ease ${links.length * 60}ms`,
+          }}
+        >
+          LinkedIn
+        </a>
+      </div>
+    </>
   )
 }

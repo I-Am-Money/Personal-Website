@@ -5,10 +5,10 @@ const PRESET_AMOUNTS = [5, 10, 25, 50, 100]
 
 export default function Donations() {
   const [selected, setSelected] = useState<number>(25)
-  const [custom, setCustom] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const sectionRef = useRef<HTMLElement>(null)
+  const [custom, setCustom]     = useState('')
+  const [loading, setLoading]   = useState(false)
+  const [error, setError]       = useState('')
+  const sectionRef              = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const el = sectionRef.current
@@ -17,12 +17,12 @@ export default function Donations() {
       ([entry]) => {
         if (entry.isIntersecting) {
           el.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach((item, i) => {
-            setTimeout(() => item.classList.add('visible'), i * 120)
+            setTimeout(() => item.classList.add('visible'), i * 110)
           })
           observer.unobserve(el)
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -33,30 +33,20 @@ export default function Donations() {
   const handleDonate = async () => {
     setError('')
     const amount = effectiveAmount
-
     if (!amount || isNaN(amount) || amount < 1 || amount > 1000) {
-      setError('Please enter an amount between $1 and $1,000.')
+      setError('Enter an amount between $1 and $1,000.')
       return
     }
-
     setLoading(true)
     try {
-      const res = await fetch('/api/create-checkout-session', {
+      const res  = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: Math.round(amount * 100) }),
       })
-
       const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error ?? 'Something went wrong. Please try again.')
-        return
-      }
-
-      if (data.url) {
-        window.location.href = data.url
-      }
+      if (!res.ok) { setError(data.error ?? 'Something went wrong.'); return }
+      if (data.url) window.location.href = data.url
     } catch {
       setError('Unable to connect. Please try again.')
     } finally {
@@ -68,127 +58,58 @@ export default function Donations() {
     <section
       id="support"
       ref={sectionRef}
-      style={{
-        padding: '120px 24px',
-        background: '#08090f',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      style={{ padding: '140px 0', background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}
     >
-      {/* Background decoration */}
-      <div
-        style={{
-          position: 'absolute',
-          width: '600px',
-          height: '600px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0,204,150,0.05) 0%, transparent 70%)',
-          bottom: '-200px',
-          left: '-100px',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Orb */}
+      <div aria-hidden="true" style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,204,150,0.06) 0%, transparent 65%)', bottom: '-200px', left: '-100px', pointerEvents: 'none', animation: 'orb-drift-2 20s ease-in-out infinite' }} />
 
-      <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '80px',
-            alignItems: 'start',
-          }}
-          className="donate-grid"
+      <div className="section-max" style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}
+          className="donate-layout"
         >
           <style>{`
             @media (max-width: 768px) {
-              .donate-grid {
-                grid-template-columns: 1fr !important;
-                gap: 40px !important;
-              }
+              .donate-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
             }
           `}</style>
 
-          {/* Left: context */}
+          {/* Left */}
           <div>
-            <div className="section-label reveal" style={{ marginBottom: '16px' }}>
+            <span className="eyebrow reveal" style={{ marginBottom: '24px', display: 'inline-flex' }}>
+              <span className="eyebrow-dot" style={{ background: 'var(--teal)' }} />
               Support
-            </div>
+            </span>
+
             <h2
               className="reveal"
-              style={{
-                fontSize: 'clamp(30px, 4vw, 46px)',
-                fontWeight: 800,
-                letterSpacing: '-0.03em',
-                color: '#eef0ff',
-                lineHeight: 1.1,
-                marginBottom: '24px',
-              }}
+              style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '28px' }}
             >
-              Back the work
+              Back<br />
+              <span className="gradient-text">the work</span>
             </h2>
-            <p
-              className="reveal"
-              style={{
-                color: '#8896aa',
-                fontSize: '15px',
-                lineHeight: 1.75,
-                marginBottom: '16px',
-              }}
-            >
-              Contributions go toward two things: keeping Hands of Hope running (outreach events,
+
+            <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '16px', maxWidth: '400px' }}>
+              Contributions go toward two things: keeping Hands of Hope funded (outreach events,
               supply drives, community programs) and the early-stage costs of building NextLine AI.
             </p>
-            <p
-              className="reveal"
-              style={{
-                color: '#8896aa',
-                fontSize: '15px',
-                lineHeight: 1.75,
-                marginBottom: '32px',
-              }}
-            >
-              There are no middlemen and no overhead bloat. A $10 contribution actually goes
-              $10 toward something real.
+            <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '40px', maxWidth: '400px' }}>
+              No middlemen. A $10 contribution goes $10 toward something real.
             </p>
 
-            <div
-              className="reveal"
-              style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-            >
+            <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {[
-                {
-                  color: '#fb923c',
-                  label: 'Hands of Hope',
-                  desc: 'Food drives, supply distribution, and community outreach across the Atlanta area.',
-                },
-                {
-                  color: '#4d8fff',
-                  label: 'NextLine AI',
-                  desc: 'Infrastructure, tooling, and development costs for building the product.',
-                },
+                { color: '#fb923c', borderColor: 'rgba(251,146,60,0.2)', label: 'Hands of Hope', desc: 'Food drives, supply runs, and community outreach across Atlanta.' },
+                { color: 'var(--blue)', borderColor: 'rgba(91,143,255,0.15)', label: 'NextLine AI', desc: 'Infrastructure and tooling for building the product.' },
               ].map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    padding: '16px 20px',
-                    background: '#0e1018',
-                    border: `1px solid ${item.color}25`,
-                    borderRadius: '12px',
-                    borderLeft: `3px solid ${item.color}`,
-                  }}
-                >
+                <div key={item.label} className="card-shell">
                   <div
-                    style={{
-                      color: item.color,
-                      fontSize: '13px',
-                      fontWeight: 700,
-                      marginBottom: '6px',
-                    }}
+                    className="card-inner"
+                    style={{ padding: '18px 20px', borderLeft: `3px solid ${item.color}` }}
                   >
-                    {item.label}
-                  </div>
-                  <div style={{ color: '#8896aa', fontSize: '13px', lineHeight: 1.6 }}>
-                    {item.desc}
+                    <div style={{ color: item.color, fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>
+                      {item.label}
+                    </div>
+                    <div style={{ color: 'var(--ash)', fontSize: '13px', lineHeight: 1.65 }}>{item.desc}</div>
                   </div>
                 </div>
               ))}
@@ -197,211 +118,101 @@ export default function Donations() {
 
           {/* Right: donation widget */}
           <div className="reveal-scale">
-            <div
-              style={{
-                background: '#0e1018',
-                border: '1px solid #1a1d2e',
-                borderRadius: '20px',
-                padding: '36px',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Top border glow */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '1px',
-                  background: 'linear-gradient(90deg, transparent, rgba(0,204,150,0.5), rgba(77,143,255,0.3), transparent)',
-                }}
-              />
+            <div className="card-shell">
+              <div className="card-inner" style={{ padding: '36px', position: 'relative', overflow: 'hidden' }}>
+                {/* Top shimmer */}
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,204,150,0.5), rgba(91,143,255,0.3), transparent)' }} />
 
-              <h3
-                style={{
-                  fontSize: '18px',
-                  fontWeight: 700,
-                  color: '#eef0ff',
-                  marginBottom: '8px',
-                }}
-              >
-                Choose an amount
-              </h3>
-              <p style={{ color: '#4a5568', fontSize: '13px', marginBottom: '24px' }}>
-                Processed securely via Stripe. No account required.
-              </p>
+                <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: '18px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '6px' }}>Choose an amount</h3>
+                <p style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '24px' }}>Processed securely via Stripe. No account needed.</p>
 
-              {/* Preset amounts */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '8px',
-                  marginBottom: '16px',
-                }}
-              >
-                {PRESET_AMOUNTS.map((amt) => (
-                  <button
-                    key={amt}
-                    onClick={() => {
-                      setSelected(amt)
-                      setCustom('')
-                      setError('')
-                    }}
-                    className={`amount-btn${!custom && selected === amt ? ' selected' : ''}`}
-                  >
-                    ${amt}
-                  </button>
-                ))}
-              </div>
-
-              {/* Custom amount */}
-              <div style={{ position: 'relative', marginBottom: '24px' }}>
-                <span
-                  style={{
-                    position: 'absolute',
-                    left: '14px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    color: custom ? '#eef0ff' : '#4a5568',
-                    fontSize: '15px',
-                    fontWeight: 600,
-                    pointerEvents: 'none',
-                  }}
-                >
-                  $
-                </span>
-                <input
-                  type="number"
-                  min="1"
-                  max="1000"
-                  step="1"
-                  placeholder="Custom amount"
-                  value={custom}
-                  onChange={(e) => {
-                    setCustom(e.target.value)
-                    setError('')
-                  }}
-                  style={{
-                    width: '100%',
-                    padding: '11px 14px 11px 28px',
-                    background: '#151821',
-                    border: `1px solid ${custom ? '#4d8fff' : '#1a1d2e'}`,
-                    borderRadius: '8px',
-                    color: '#eef0ff',
-                    fontSize: '15px',
-                    fontWeight: 600,
-                    outline: 'none',
-                    transition: 'border-color 0.2s',
-                  }}
-                />
-              </div>
-
-              {/* Summary line */}
-              {effectiveAmount > 0 && !isNaN(effectiveAmount) && (
-                <div
-                  style={{
-                    padding: '10px 14px',
-                    background: 'rgba(77,143,255,0.07)',
-                    border: '1px solid rgba(77,143,255,0.15)',
-                    borderRadius: '8px',
-                    marginBottom: '20px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <span style={{ color: '#8896aa', fontSize: '13px' }}>Total</span>
-                  <span style={{ color: '#4d8fff', fontSize: '16px', fontWeight: 700 }}>
-                    ${effectiveAmount.toFixed(2)}
-                  </span>
-                </div>
-              )}
-
-              {error && (
-                <p
-                  style={{
-                    color: '#f87171',
-                    fontSize: '13px',
-                    marginBottom: '16px',
-                    padding: '10px 14px',
-                    background: 'rgba(248,113,113,0.08)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(248,113,113,0.2)',
-                  }}
-                >
-                  {error}
-                </p>
-              )}
-
-              <button
-                onClick={handleDonate}
-                disabled={loading}
-                className="btn-primary"
-                style={{
-                  width: '100%',
-                  justifyContent: 'center',
-                  opacity: loading ? 0.7 : 1,
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                }}
-              >
-                {loading ? (
-                  <>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{ animation: 'spin 1s linear infinite' }}
+                {/* Presets */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '14px' }}>
+                  {PRESET_AMOUNTS.map((amt) => (
+                    <button
+                      key={amt}
+                      onClick={() => { setSelected(amt); setCustom(''); setError('') }}
+                      className={`amount-btn${!custom && selected === amt ? ' selected' : ''}`}
                     >
-                      <path d="M21 12a9 9 0 11-6.219-8.56" />
-                    </svg>
-                    Redirecting to Stripe...
-                  </>
-                ) : (
-                  <>
-                    Donate${effectiveAmount > 0 && !isNaN(effectiveAmount) ? ` $${effectiveAmount}` : ''}
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </svg>
-                  </>
-                )}
-              </button>
+                      ${amt}
+                    </button>
+                  ))}
+                </div>
 
-              <p
-                style={{
-                  textAlign: 'center',
-                  color: '#4a5568',
-                  fontSize: '12px',
-                  marginTop: '16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px',
-                }}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0110 0v4" />
-                </svg>
-                Payments processed by Stripe. Card info never touches this server.
-              </p>
+                {/* Custom */}
+                <div style={{ position: 'relative', marginBottom: '24px' }}>
+                  <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: custom ? '#f0f2ff' : 'var(--muted)', fontSize: '15px', fontWeight: 700, pointerEvents: 'none' }}>$</span>
+                  <input
+                    type="number" min="1" max="1000" step="1" placeholder="Custom amount"
+                    value={custom}
+                    onChange={(e) => { setCustom(e.target.value); setError('') }}
+                    style={{
+                      width: '100%', padding: '11px 14px 11px 28px',
+                      background: 'rgba(255,255,255,0.04)',
+                      border: `1px solid ${custom ? 'var(--blue)' : 'var(--border)'}`,
+                      borderRadius: '10px', color: '#f0f2ff', fontSize: '15px', fontWeight: 700,
+                      outline: 'none', transition: 'border-color 0.2s ease',
+                      fontFamily: "'Space Grotesk', sans-serif",
+                    }}
+                  />
+                </div>
+
+                {/* Total */}
+                {effectiveAmount > 0 && !isNaN(effectiveAmount) && (
+                  <div style={{
+                    padding: '10px 14px', background: 'rgba(91,143,255,0.07)',
+                    border: '1px solid rgba(91,143,255,0.14)', borderRadius: '8px',
+                    marginBottom: '18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  }}>
+                    <span style={{ color: 'var(--ash)', fontSize: '13px' }}>Total</span>
+                    <span style={{ color: 'var(--blue)', fontSize: '17px', fontWeight: 800, fontFamily: "'Archivo', sans-serif" }}>
+                      ${effectiveAmount.toFixed(2)}
+                    </span>
+                  </div>
+                )}
+
+                {error && (
+                  <div style={{ padding: '10px 14px', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)', borderRadius: '8px', color: '#f87171', fontSize: '13px', marginBottom: '16px' }}>
+                    {error}
+                  </div>
+                )}
+
+                <button
+                  onClick={handleDonate}
+                  disabled={loading}
+                  className="btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer', fontSize: '15px', paddingLeft: '24px' }}
+                >
+                  {loading ? (
+                    <>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite', marginRight: '8px' }}>
+                        <path d="M21 12a9 9 0 11-6.219-8.56" />
+                      </svg>
+                      Redirecting to Stripe...
+                    </>
+                  ) : (
+                    <>
+                      Donate{effectiveAmount > 0 && !isNaN(effectiveAmount) ? ` $${effectiveAmount}` : ''}
+                      <span className="btn-icon-wrap">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                        </svg>
+                      </span>
+                    </>
+                  )}
+                </button>
+
+                <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: '11px', marginTop: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" />
+                  </svg>
+                  Card details never touch this server. Handled by Stripe.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
     </section>
   )
 }
