@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import { Lock, ArrowRight } from '@phosphor-icons/react'
 
 const PRESET_AMOUNTS = [5, 10, 25, 50, 100]
 
@@ -16,8 +17,8 @@ export default function Donations() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach((item, i) => {
-            setTimeout(() => item.classList.add('visible'), i * 110)
+          el.querySelectorAll('.reveal, .reveal-scale').forEach((item, i) => {
+            setTimeout(() => item.classList.add('visible'), i * 100)
           })
           observer.unobserve(el)
         }
@@ -58,157 +59,135 @@ export default function Donations() {
     <section
       id="support"
       ref={sectionRef}
-      style={{ padding: '140px 0', background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}
+      style={{ padding: '140px 0', background: 'var(--surface)', borderTop: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}
     >
-      {/* Orb */}
-      <div aria-hidden="true" style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,204,150,0.06) 0%, transparent 65%)', bottom: '-200px', left: '-100px', pointerEvents: 'none', animation: 'orb-drift-2 20s ease-in-out infinite' }} />
+      <div aria-hidden="true" style={{ position: 'absolute', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(91,143,255,0.05) 0%, transparent 65%)', bottom: '-150px', left: '-80px', pointerEvents: 'none', animation: 'orb-drift-2 20s ease-in-out infinite' }} />
 
-      <div className="section-max" style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}
-          className="donate-layout"
-        >
-          <style>{`
-            @media (max-width: 768px) {
-              .donate-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
-            }
-          `}</style>
+      <div className="section-max donate-layout" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
+        <style>{`
+          @media (max-width: 768px) {
+            .donate-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+          }
+        `}</style>
 
-          {/* Left */}
-          <div>
-            <span className="eyebrow reveal" style={{ marginBottom: '24px', display: 'inline-flex' }}>
-              <span className="eyebrow-dot" style={{ background: 'var(--teal)' }} />
-              Support
-            </span>
+        {/* Left */}
+        <div>
+          <h2
+            className="reveal"
+            style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '28px' }}
+          >
+            Back the work
+          </h2>
 
-            <h2
-              className="reveal"
-              style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '28px' }}
-            >
-              Back<br />
-              <span className="gradient-text">the work</span>
-            </h2>
+          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '16px', maxWidth: '400px' }}>
+            Contributions go toward two things: keeping Hands of Hope funded (outreach events,
+            supply drives, community programs) and the early-stage costs of building NextLine AI.
+          </p>
+          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '40px', maxWidth: '400px' }}>
+            No middlemen. A $10 contribution goes $10 toward something real.
+          </p>
 
-            <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '16px', maxWidth: '400px' }}>
-              Contributions go toward two things: keeping Hands of Hope funded (outreach events,
-              supply drives, community programs) and the early-stage costs of building NextLine AI.
-            </p>
-            <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '40px', maxWidth: '400px' }}>
-              No middlemen. A $10 contribution goes $10 toward something real.
-            </p>
-
-            <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {[
-                { color: '#fb923c', borderColor: 'rgba(251,146,60,0.2)', label: 'Hands of Hope', desc: 'Food drives, supply runs, and community outreach across Atlanta.' },
-                { color: 'var(--blue)', borderColor: 'rgba(91,143,255,0.15)', label: 'NextLine AI', desc: 'Infrastructure and tooling for building the product.' },
-              ].map((item) => (
-                <div key={item.label} className="card-shell">
-                  <div
-                    className="card-inner"
-                    style={{ padding: '18px 20px', borderLeft: `3px solid ${item.color}` }}
-                  >
-                    <div style={{ color: item.color, fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>
-                      {item.label}
-                    </div>
-                    <div style={{ color: 'var(--ash)', fontSize: '13px', lineHeight: 1.65 }}>{item.desc}</div>
-                  </div>
+          <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '0', borderTop: '1px solid var(--border)' }}>
+            {[
+              { label: 'Hands of Hope', desc: 'Food drives, supply runs, and community outreach across Atlanta.' },
+              { label: 'NextLine AI', desc: 'Infrastructure and tooling for building the product.' },
+            ].map((item) => (
+              <div
+                key={item.label}
+                style={{ padding: '20px 0', borderBottom: '1px solid var(--border)' }}
+              >
+                <div style={{ color: 'var(--blue)', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>
+                  {item.label}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: donation widget */}
-          <div className="reveal-scale">
-            <div className="card-shell">
-              <div className="card-inner" style={{ padding: '36px', position: 'relative', overflow: 'hidden' }}>
-                {/* Top shimmer */}
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,204,150,0.5), rgba(91,143,255,0.3), transparent)' }} />
-
-                <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: '18px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '6px' }}>Choose an amount</h3>
-                <p style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '24px' }}>Processed securely via Stripe. No account needed.</p>
-
-                {/* Presets */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '14px' }}>
-                  {PRESET_AMOUNTS.map((amt) => (
-                    <button
-                      key={amt}
-                      onClick={() => { setSelected(amt); setCustom(''); setError('') }}
-                      className={`amount-btn${!custom && selected === amt ? ' selected' : ''}`}
-                    >
-                      ${amt}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Custom */}
-                <div style={{ position: 'relative', marginBottom: '24px' }}>
-                  <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: custom ? '#f0f2ff' : 'var(--muted)', fontSize: '15px', fontWeight: 700, pointerEvents: 'none' }}>$</span>
-                  <input
-                    type="number" min="1" max="1000" step="1" placeholder="Custom amount"
-                    value={custom}
-                    onChange={(e) => { setCustom(e.target.value); setError('') }}
-                    style={{
-                      width: '100%', padding: '11px 14px 11px 28px',
-                      background: 'rgba(255,255,255,0.04)',
-                      border: `1px solid ${custom ? 'var(--blue)' : 'var(--border)'}`,
-                      borderRadius: '10px', color: '#f0f2ff', fontSize: '15px', fontWeight: 700,
-                      outline: 'none', transition: 'border-color 0.2s ease',
-                      fontFamily: "'Space Grotesk', sans-serif",
-                    }}
-                  />
-                </div>
-
-                {/* Total */}
-                {effectiveAmount > 0 && !isNaN(effectiveAmount) && (
-                  <div style={{
-                    padding: '10px 14px', background: 'rgba(91,143,255,0.07)',
-                    border: '1px solid rgba(91,143,255,0.14)', borderRadius: '8px',
-                    marginBottom: '18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  }}>
-                    <span style={{ color: 'var(--ash)', fontSize: '13px' }}>Total</span>
-                    <span style={{ color: 'var(--blue)', fontSize: '17px', fontWeight: 800, fontFamily: "'Archivo', sans-serif" }}>
-                      ${effectiveAmount.toFixed(2)}
-                    </span>
-                  </div>
-                )}
-
-                {error && (
-                  <div style={{ padding: '10px 14px', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)', borderRadius: '8px', color: '#f87171', fontSize: '13px', marginBottom: '16px' }}>
-                    {error}
-                  </div>
-                )}
-
-                <button
-                  onClick={handleDonate}
-                  disabled={loading}
-                  className="btn-primary"
-                  style={{ width: '100%', justifyContent: 'center', opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer', fontSize: '15px', paddingLeft: '24px' }}
-                >
-                  {loading ? (
-                    <>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite', marginRight: '8px' }}>
-                        <path d="M21 12a9 9 0 11-6.219-8.56" />
-                      </svg>
-                      Redirecting to Stripe...
-                    </>
-                  ) : (
-                    <>
-                      Donate{effectiveAmount > 0 && !isNaN(effectiveAmount) ? ` $${effectiveAmount}` : ''}
-                      <span className="btn-icon-wrap">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                        </svg>
-                      </span>
-                    </>
-                  )}
-                </button>
-
-                <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: '11px', marginTop: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" />
-                  </svg>
-                  Card details never touch this server. Handled by Stripe.
-                </p>
+                <div style={{ color: 'var(--ash)', fontSize: '13px', lineHeight: 1.65 }}>{item.desc}</div>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: donation widget */}
+        <div className="reveal-scale">
+          <div className="card-shell">
+            <div className="card-inner" style={{ padding: '32px', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(91,143,255,0.4), transparent)' }} />
+
+              <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '6px' }}>Choose an amount</h3>
+              <p style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '24px' }}>Processed securely via Stripe. No account needed.</p>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '14px' }}>
+                {PRESET_AMOUNTS.map((amt) => (
+                  <button
+                    key={amt}
+                    onClick={() => { setSelected(amt); setCustom(''); setError('') }}
+                    className={`amount-btn${!custom && selected === amt ? ' selected' : ''}`}
+                  >
+                    ${amt}
+                  </button>
+                ))}
+              </div>
+
+              <div style={{ position: 'relative', marginBottom: '20px' }}>
+                <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: custom ? '#f0f2ff' : 'var(--muted)', fontSize: '15px', fontWeight: 700, pointerEvents: 'none' }}>$</span>
+                <input
+                  type="number" min="1" max="1000" step="1" placeholder="Custom amount"
+                  value={custom}
+                  onChange={(e) => { setCustom(e.target.value); setError('') }}
+                  style={{
+                    width: '100%', padding: '11px 14px 11px 28px',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: `1px solid ${custom ? 'var(--blue)' : 'var(--border)'}`,
+                    borderRadius: '10px', color: '#f0f2ff', fontSize: '15px', fontWeight: 700,
+                    outline: 'none', transition: 'border-color 0.2s ease',
+                  }}
+                />
+              </div>
+
+              {effectiveAmount > 0 && !isNaN(effectiveAmount) && (
+                <div style={{
+                  padding: '10px 14px', background: 'rgba(91,143,255,0.07)',
+                  border: '1px solid rgba(91,143,255,0.14)', borderRadius: '8px',
+                  marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                }}>
+                  <span style={{ color: 'var(--ash)', fontSize: '13px' }}>Total</span>
+                  <span style={{ color: 'var(--blue)', fontSize: '17px', fontWeight: 800, fontFamily: "'Archivo', sans-serif" }}>
+                    ${effectiveAmount.toFixed(2)}
+                  </span>
+                </div>
+              )}
+
+              {error && (
+                <div style={{ padding: '10px 14px', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)', borderRadius: '8px', color: '#f87171', fontSize: '13px', marginBottom: '14px' }}>
+                  {error}
+                </div>
+              )}
+
+              <button
+                onClick={handleDonate}
+                disabled={loading}
+                className="btn-primary"
+                style={{ width: '100%', justifyContent: 'center', opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer', fontSize: '15px', paddingLeft: '24px' }}
+              >
+                {loading ? (
+                  <>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite', marginRight: '8px' }}>
+                      <path d="M21 12a9 9 0 11-6.219-8.56" />
+                    </svg>
+                    Redirecting to Stripe...
+                  </>
+                ) : (
+                  <>
+                    Donate{effectiveAmount > 0 && !isNaN(effectiveAmount) ? ` $${effectiveAmount}` : ''}
+                    <span className="btn-icon-wrap">
+                      <ArrowRight size={13} weight="bold" />
+                    </span>
+                  </>
+                )}
+              </button>
+
+              <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: '11px', marginTop: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+                <Lock size={11} weight="bold" />
+                Card details never touch this server. Handled by Stripe.
+              </p>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import { Clock, ChatText, Phone } from '@phosphor-icons/react'
 
 export default function BookCall() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -11,8 +12,8 @@ export default function BookCall() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach((item, i) => {
-            setTimeout(() => item.classList.add('visible'), i * 120)
+          el.querySelectorAll('.reveal, .reveal-scale').forEach((item, i) => {
+            setTimeout(() => item.classList.add('visible'), i * 110)
           })
           observer.unobserve(el)
         }
@@ -36,10 +37,10 @@ export default function BookCall() {
     <section
       id="book"
       ref={sectionRef}
-      style={{ padding: '140px 0', background: 'var(--surface)' }}
+      style={{ padding: '140px 0', background: 'var(--bg)', borderTop: '1px solid var(--border)' }}
     >
       <div
-        className="section-max"
+        className="section-max book-grid"
         style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}
       >
         <style>{`
@@ -48,14 +49,8 @@ export default function BookCall() {
           }
         `}</style>
 
-        <div className="book-grid" style={{ display: 'contents' }}>
-        {/* Left: copy */}
+        {/* Left */}
         <div>
-          <span className="eyebrow reveal" style={{ marginBottom: '24px', display: 'inline-flex' }}>
-            <span className="eyebrow-dot" style={{ background: 'var(--teal)' }} />
-            Book a call
-          </span>
-
           <h2
             className="reveal"
             style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '28px' }}
@@ -76,42 +71,20 @@ export default function BookCall() {
 
           <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
-              {
-                color: 'var(--blue)',
-                icon: (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-                  </svg>
-                ),
-                title: '30 minutes',
-                desc: 'Focused. No filler.',
-              },
-              {
-                color: 'var(--teal)',
-                icon: (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-                  </svg>
-                ),
-                title: 'Any topic',
-                desc: 'Startups, nonprofits, tech, school, life.',
-              },
-              {
-                color: 'var(--indigo)',
-                icon: (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M15.05 5A5 5 0 0119 8.95M15.05 1A9 9 0 0123 8.94m-1 7.98v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012.18 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 9.9a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
-                  </svg>
-                ),
-                title: 'Video or phone',
-                desc: 'Your call, confirmed on booking.',
-              },
+              { icon: <Clock size={16} weight="bold" />, title: '30 minutes', desc: 'Focused. No filler.' },
+              { icon: <ChatText size={16} weight="bold" />, title: 'Any topic', desc: 'Startups, nonprofits, tech, school, life.' },
+              { icon: <Phone size={16} weight="bold" />, title: 'Video or phone', desc: 'Your call, confirmed on booking.' },
             ].map((item) => (
               <div key={item.title} style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div className="card-shell" style={{ flexShrink: 0 }}>
-                  <div className="card-inner" style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: item.color }}>
-                    {item.icon}
-                  </div>
+                <div
+                  style={{
+                    width: '36px', height: '36px', borderRadius: '10px',
+                    background: 'rgba(91,143,255,0.08)', border: '1px solid rgba(91,143,255,0.15)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: 'var(--blue)', flexShrink: 0,
+                  }}
+                >
+                  {item.icon}
                 </div>
                 <div style={{ paddingTop: '4px' }}>
                   <div style={{ fontFamily: "'Archivo', sans-serif", color: '#f0f2ff', fontSize: '14px', fontWeight: 700, marginBottom: '2px' }}>{item.title}</div>
@@ -133,7 +106,6 @@ export default function BookCall() {
               />
             </div>
           </div>
-        </div>
         </div>
       </div>
     </section>

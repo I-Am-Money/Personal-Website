@@ -1,8 +1,11 @@
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
-import Experience from '@/components/Experience'
 import NextlineAI from '@/components/NextlineAI'
-import Education from '@/components/Education'
+import Work from '@/components/Work'
+import Community from '@/components/Community'
+import Projects from '@/components/Projects'
+import Mission from '@/components/Mission'
+import Interests from '@/components/Interests'
 import BookCall from '@/components/BookCall'
 import Donations from '@/components/Donations'
 import Footer from '@/components/Footer'
@@ -11,11 +14,14 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <main>
+      <main id="top">
         <Hero />
-        <Experience />
         <NextlineAI />
-        <Education />
+        <Work />
+        <Community />
+        <Projects />
+        <Mission />
+        <Interests />
         <BookCall />
         <Donations />
       </main>

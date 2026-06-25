@@ -1,5 +1,66 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import { PaperPlaneTilt, CalendarBlank } from '@phosphor-icons/react'
+
+function FlowDiagram() {
+  return (
+    <div style={{ overflowX: 'auto', paddingBottom: '8px' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          minWidth: '560px',
+          padding: '40px 48px',
+        }}
+      >
+        {[
+          { label: 'Caller', sub: 'Reaches out' },
+          null,
+          { label: 'Business', sub: 'Does not answer', dim: true },
+          null,
+          { label: 'NextLine AI', sub: 'Intercepts call', highlight: true },
+          null,
+          { label: 'Resolution', sub: 'Every call handled' },
+        ].map((node, i) => {
+          if (node === null) {
+            return (
+              <div key={i} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="32" height="12" viewBox="0 0 32 12" fill="none">
+                  <line x1="0" y1="6" x2="26" y2="6" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="3 2" />
+                  <polyline points="22,2 28,6 22,10" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" />
+                </svg>
+              </div>
+            )
+          }
+          return (
+            <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+              <div
+                style={{
+                  padding: '12px 20px',
+                  borderRadius: '10px',
+                  background: node.highlight ? 'rgba(91,143,255,0.12)' : 'rgba(255,255,255,0.03)',
+                  border: node.highlight ? '1px solid rgba(91,143,255,0.35)' : '1px solid var(--border)',
+                  color: node.highlight ? 'var(--blue)' : node.dim ? 'var(--muted)' : 'var(--ash)',
+                  fontFamily: "'Archivo', sans-serif",
+                  fontSize: '13px',
+                  fontWeight: 800,
+                  letterSpacing: '-0.01em',
+                  whiteSpace: 'nowrap',
+                  boxShadow: node.highlight ? '0 0 24px rgba(91,143,255,0.12)' : 'none',
+                }}
+              >
+                {node.label}
+              </div>
+              <div style={{ color: 'var(--muted)', fontSize: '11px', fontWeight: 600, letterSpacing: '0.02em', textAlign: 'center' }}>
+                {node.sub}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
 export default function NextlineAI() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -11,12 +72,12 @@ export default function NextlineAI() {
       ([entry]) => {
         if (entry.isIntersecting) {
           el.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach((item, i) => {
-            setTimeout(() => item.classList.add('visible'), i * 130)
+            setTimeout(() => item.classList.add('visible'), i * 110)
           })
           observer.unobserve(el)
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.07 }
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -26,179 +87,168 @@ export default function NextlineAI() {
     <section
       id="nextline"
       ref={sectionRef}
-      style={{
-        padding: '140px 0',
-        position: 'relative',
-        overflow: 'hidden',
-        background: 'var(--surface)',
-      }}
+      style={{ background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}
     >
-      {/* Orbs */}
+      {/* Ambient orb */}
       <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        <div style={{
-          position: 'absolute', width: '600px', height: '600px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(91,143,255,0.08) 0%, transparent 65%)',
-          top: '-100px', left: '-100px', animation: 'orb-drift-1 20s ease-in-out infinite',
-        }} />
-        <div style={{
-          position: 'absolute', width: '500px', height: '500px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0,204,150,0.06) 0%, transparent 65%)',
-          bottom: '-120px', right: '-60px', animation: 'orb-drift-2 24s ease-in-out infinite',
-        }} />
-        {/* Horizontal line accent */}
-        <div style={{
-          position: 'absolute', top: '50%', left: 0, right: 0,
-          height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(91,143,255,0.12), rgba(0,204,150,0.08), transparent)',
-          pointerEvents: 'none',
-        }} />
+        <div style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(91,143,255,0.06) 0%, transparent 65%)', top: '-100px', right: '-100px', animation: 'orb-drift-1 20s ease-in-out infinite' }} />
       </div>
 
-      <div
-        className="section-max"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '80px',
-          alignItems: 'center',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
-        <style>{`
-          @media (max-width: 768px) {
-            .nextline-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-          }
-        `}</style>
+      {/* Product overview */}
+      <div className="section-max" style={{ paddingTop: '140px', paddingBottom: '100px', position: 'relative', zIndex: 1 }}>
+        <span className="eyebrow reveal" style={{ marginBottom: '28px', display: 'inline-flex' }}>
+          AI Startup
+        </span>
+        <h2
+          className="reveal"
+          style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(36px, 5.5vw, 72px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, maxWidth: '660px', marginBottom: '64px' }}
+        >
+          AI that answers when<br />your business can't.
+        </h2>
 
-        {/* ---- Left: copy ---- */}
-        <div className="nextline-grid" style={{ display: 'contents' }}>
-        <div>
-          <span className="eyebrow reveal" style={{ marginBottom: '24px', display: 'inline-flex' }}>
-            <span className="eyebrow-dot" style={{ background: 'var(--blue)', animation: 'pulse-dot 2s ease infinite' }} />
-            Startup
-          </span>
-
-          <h2
-            className="reveal"
-            style={{
-              fontSize: 'clamp(40px, 6vw, 76px)',
-              fontWeight: 900,
-              letterSpacing: '-0.05em',
-              lineHeight: 0.95,
-              marginBottom: '28px',
-            }}
-          >
-            NextLine<br />
-            <span className="gradient-text">AI</span>
-          </h2>
-
-          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(15px, 1.6vw, 17px)', lineHeight: 1.8, marginBottom: '20px', maxWidth: '440px' }}>
-            NextLine AI is building practical intelligence tools designed around real workflows.
-            No magic demos built for investors. Software that solves specific problems and gets
-            out of the way.
-          </p>
-
-          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(15px, 1.6vw, 17px)', lineHeight: 1.8, marginBottom: '44px', maxWidth: '440px' }}>
-            Founded and led by Sahas. Currently in active development. If you are a developer,
-            designer, or operator interested in what we are building, reach out.
-          </p>
-
-          <div className="reveal" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <a href="mailto:sahas.konreddy1@gmail.com?subject=NextLine AI" className="btn-primary">
-              Get in touch
-              <span className="btn-icon-wrap">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
-                </svg>
-              </span>
-            </a>
-            <a href="https://calendly.com/sahas-konreddy1/30min" target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              Schedule a call
-              <span className="btn-icon-wrap">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                  <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
-              </span>
-            </a>
+        {/* Flow diagram */}
+        <div className="card-shell reveal">
+          <div className="card-inner" style={{ position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(91,143,255,0.5), transparent)' }} />
+            <FlowDiagram />
           </div>
         </div>
 
-        {/* ---- Right: product card (double-bezel) ---- */}
-        <div className="reveal-scale">
-          <div className="card-shell">
-            <div className="card-inner" style={{ padding: '40px', position: 'relative', overflow: 'hidden' }}>
-              {/* Top shimmer */}
-              <div style={{
-                position: 'absolute', top: 0, left: 0, right: 0, height: '1px',
-                background: 'linear-gradient(90deg, transparent, rgba(91,143,255,0.6), rgba(0,204,150,0.4), transparent)',
-              }} />
-
-              {/* Logo mark */}
-              <div style={{
-                width: '52px', height: '52px', borderRadius: '16px',
-                background: 'linear-gradient(135deg, rgba(91,143,255,0.18) 0%, rgba(0,204,150,0.12) 100%)',
-                border: '1px solid rgba(91,143,255,0.25)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: '24px',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
-              }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#5b8fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M2 17l10 5 10-5" stroke="#00cc96" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M2 12l10 5 10-5" stroke="#5b8fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="3 2" />
-                </svg>
+        {/* Feature bullets — horizontal divider list, not 4 equal cards */}
+        <div
+          className="reveal"
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0', borderTop: '1px solid var(--border)', marginTop: '48px' }}
+        >
+          <style>{`
+            @media (max-width: 640px) {
+              .nextline-feats { grid-template-columns: 1fr !important; }
+            }
+          `}</style>
+          <div className="nextline-feats" style={{ display: 'contents' }}>
+            {[
+              'Zero missed calls',
+              'Works 24/7 without staff',
+              'Scales to any call volume',
+              'No new hardware required',
+            ].map((feat, i) => (
+              <div
+                key={feat}
+                style={{
+                  padding: '20px 24px',
+                  borderRight: i % 2 === 0 ? '1px solid var(--border)' : 'none',
+                  borderBottom: i < 2 ? '1px solid var(--border)' : 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                }}
+              >
+                <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--blue)', flexShrink: 0 }} />
+                <span style={{ color: 'var(--ash)', fontSize: '13px', fontWeight: 600 }}>{feat}</span>
               </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-              <span className="eyebrow" style={{ marginBottom: '14px', display: 'inline-flex', borderColor: 'rgba(91,143,255,0.2)', color: 'var(--blue)' }}>
-                <span className="eyebrow-dot" style={{ background: 'var(--blue)', animation: 'pulse-dot 2.5s ease infinite' }} />
-                In development
-              </span>
+      {/* Deep dive */}
+      <div style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="section-max" style={{ paddingTop: '100px', paddingBottom: '140px', position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '80px', alignItems: 'start' }}
+            className="nextline-dl-grid"
+          >
+            <style>{`
+              @media (max-width: 768px) {
+                .nextline-dl-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+                .nextline-feats { grid-template-columns: 1fr !important; }
+              }
+            `}</style>
 
-              <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: '26px', fontWeight: 900, letterSpacing: '-0.04em', marginBottom: '16px', lineHeight: 1.1 }}>
+            {/* Left: label column */}
+            <div className="reveal">
+              <h3
+                style={{
+                  fontFamily: "'Archivo', sans-serif",
+                  fontSize: 'clamp(13px, 1.2vw, 15px)',
+                  fontWeight: 700,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: 'var(--muted)',
+                  marginBottom: '12px',
+                }}
+              >
                 NextLine AI
               </h3>
+              <p style={{ color: 'var(--ash)', fontSize: '14px', lineHeight: 1.8 }}>
+                Founded and led by Sahas. Built to solve a specific problem before chasing a valuation.
+              </p>
+            </div>
 
-              <p style={{ color: 'var(--ash)', fontSize: '14px', lineHeight: 1.75, marginBottom: '32px' }}>
-                Practical AI tools built around real use cases. The focus is utility over novelty: tools you would
-                actually reach for, not just demo.
+            {/* Right: content */}
+            <div>
+              <h3
+                className="reveal"
+                style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(24px, 3vw, 38px)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '24px' }}
+              >
+                It started with a missed call.
+              </h3>
+              <p
+                className="reveal"
+                style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.85, marginBottom: '48px', maxWidth: '560px' }}
+              >
+                A business lost a customer because nobody picked up. The voicemail was full. The customer
+                called once, got silence, and moved on. The business never knew. NextLine AI exists because
+                that gap costs real people real money, and the fix should not require hiring another person
+                or buying new hardware.
               </p>
 
-              {/* Feature list */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '32px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0', borderTop: '1px solid var(--border)' }}>
                 {[
-                  { label: 'Founded by a high school builder', color: 'var(--blue)' },
-                  { label: 'Focused on real-world utility', color: 'var(--teal)' },
-                  { label: 'Active development phase', color: 'var(--indigo)' },
-                ].map((item) => (
-                  <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: item.color, flexShrink: 0 }} />
-                    <span style={{ color: 'var(--ash)', fontSize: '14px' }}>{item.label}</span>
+                  {
+                    title: 'The problem',
+                    body: 'Small and mid-sized businesses miss calls constantly. Every unanswered call is a lost customer who simply goes to the next result on Google.',
+                  },
+                  {
+                    title: 'The gap',
+                    body: 'Existing solutions require expensive hardware, long setup times, or trained staff. Most businesses cannot afford any of those. They just miss the calls.',
+                  },
+                  {
+                    title: 'The product',
+                    body: 'NextLine AI intercepts unanswered calls and routes them intelligently. The caller gets a real response. The business gets full coverage with zero new headcount.',
+                  },
+                  {
+                    title: 'Where it stands',
+                    body: 'Currently in active development. Built to solve a specific problem before chasing a valuation.',
+                  },
+                ].map((point) => (
+                  <div
+                    key={point.title}
+                    className="reveal"
+                    style={{ padding: '24px 0', borderBottom: '1px solid var(--border)' }}
+                  >
+                    <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', color: '#f0f2ff', marginBottom: '8px' }}>
+                      {point.title}
+                    </div>
+                    <p style={{ color: 'var(--ash)', fontSize: '14px', lineHeight: 1.75 }}>{point.body}</p>
                   </div>
                 ))}
               </div>
 
-              {/* Contact bar */}
-              <div style={{
-                padding: '12px 16px',
-                background: 'rgba(91,143,255,0.06)',
-                border: '1px solid rgba(91,143,255,0.12)',
-                borderRadius: '10px',
-                fontSize: '13px',
-                color: 'var(--muted)',
-              }}>
-                Contact:&nbsp;
-                <a
-                  href="mailto:sahas.konreddy1@gmail.com"
-                  style={{ color: 'var(--blue)', textDecoration: 'none', fontWeight: 600 }}
-                >
-                  sahas.konreddy1@gmail.com
+              <div className="reveal" style={{ marginTop: '40px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <a href="mailto:sahas.konreddy1@gmail.com?subject=NextLine AI" className="btn-primary">
+                  Get in touch
+                  <span className="btn-icon-wrap">
+                    <PaperPlaneTilt size={13} weight="bold" />
+                  </span>
+                </a>
+                <a href="#book" className="btn-secondary">
+                  Book a call
+                  <span className="btn-icon-wrap">
+                    <CalendarBlank size={13} weight="bold" />
+                  </span>
                 </a>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </section>
