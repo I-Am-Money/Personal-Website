@@ -79,7 +79,7 @@ export default function BookCall() {
                 <div
                   style={{
                     width: '36px', height: '36px', borderRadius: '10px',
-                    background: 'rgba(91,143,255,0.08)', border: '1px solid rgba(91,143,255,0.15)',
+                    background: 'rgba(240,180,41,0.08)', border: '1px solid rgba(240,180,41,0.15)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     color: 'var(--blue)', flexShrink: 0,
                   }}
@@ -87,7 +87,7 @@ export default function BookCall() {
                   {item.icon}
                 </div>
                 <div style={{ paddingTop: '4px' }}>
-                  <div style={{ fontFamily: "'Archivo', sans-serif", color: '#f0f2ff', fontSize: '14px', fontWeight: 700, marginBottom: '2px' }}>{item.title}</div>
+                  <div style={{ fontFamily: "'Archivo', sans-serif", color: 'var(--ink)', fontSize: '14px', fontWeight: 700, marginBottom: '2px' }}>{item.title}</div>
                   <div style={{ color: 'var(--muted)', fontSize: '13px' }}>{item.desc}</div>
                 </div>
               </div>
@@ -101,7 +101,7 @@ export default function BookCall() {
             <div className="card-inner" style={{ overflow: 'hidden' }}>
               <div
                 className="calendly-inline-widget"
-                data-url="https://calendly.com/sahas-konreddy1/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0c0d14&text_color=f0f2ff&primary_color=5b8fff"
+                data-url="https://calendly.com/sahas-konreddy1/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=110f16&text_color=fdf8ee&primary_color=f0b429"
                 style={{ minWidth: '280px', height: '680px' }}
               />
             </div>

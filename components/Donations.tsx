@@ -61,7 +61,7 @@ export default function Donations() {
       ref={sectionRef}
       style={{ padding: '140px 0', background: 'var(--surface)', borderTop: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}
     >
-      <div aria-hidden="true" style={{ position: 'absolute', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(91,143,255,0.05) 0%, transparent 65%)', bottom: '-150px', left: '-80px', pointerEvents: 'none', animation: 'orb-drift-2 20s ease-in-out infinite' }} />
+      <div aria-hidden="true" style={{ position: 'absolute', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,180,41,0.05) 0%, transparent 65%)', bottom: '-150px', left: '-80px', pointerEvents: 'none', animation: 'orb-drift-2 20s ease-in-out infinite' }} />
 
       <div className="section-max donate-layout" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
         <style>{`
@@ -109,7 +109,7 @@ export default function Donations() {
         <div className="reveal-scale">
           <div className="card-shell">
             <div className="card-inner" style={{ padding: '32px', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(91,143,255,0.4), transparent)' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(240,180,41,0.4), transparent)' }} />
 
               <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '6px' }}>Choose an amount</h3>
               <p style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '24px' }}>Processed securely via Stripe. No account needed.</p>
@@ -127,7 +127,7 @@ export default function Donations() {
               </div>
 
               <div style={{ position: 'relative', marginBottom: '20px' }}>
-                <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: custom ? '#f0f2ff' : 'var(--muted)', fontSize: '15px', fontWeight: 700, pointerEvents: 'none' }}>$</span>
+                <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: custom ? 'var(--ink)' : 'var(--muted)', fontSize: '15px', fontWeight: 700, pointerEvents: 'none' }}>$</span>
                 <input
                   type="number" min="1" max="1000" step="1" placeholder="Custom amount"
                   value={custom}
@@ -136,7 +136,7 @@ export default function Donations() {
                     width: '100%', padding: '11px 14px 11px 28px',
                     background: 'rgba(255,255,255,0.04)',
                     border: `1px solid ${custom ? 'var(--blue)' : 'var(--border)'}`,
-                    borderRadius: '10px', color: '#f0f2ff', fontSize: '15px', fontWeight: 700,
+                    borderRadius: '10px', color: 'var(--ink)', fontSize: '15px', fontWeight: 700,
                     outline: 'none', transition: 'border-color 0.2s ease',
                   }}
                 />
@@ -144,8 +144,8 @@ export default function Donations() {
 
               {effectiveAmount > 0 && !isNaN(effectiveAmount) && (
                 <div style={{
-                  padding: '10px 14px', background: 'rgba(91,143,255,0.07)',
-                  border: '1px solid rgba(91,143,255,0.14)', borderRadius: '8px',
+                  padding: '10px 14px', background: 'rgba(240,180,41,0.07)',
+                  border: '1px solid rgba(240,180,41,0.14)', borderRadius: '8px',
                   marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 }}>
                   <span style={{ color: 'var(--ash)', fontSize: '13px' }}>Total</span>

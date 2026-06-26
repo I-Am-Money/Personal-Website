@@ -38,15 +38,15 @@ function FlowDiagram() {
                 style={{
                   padding: '12px 20px',
                   borderRadius: '10px',
-                  background: node.highlight ? 'rgba(91,143,255,0.12)' : 'rgba(255,255,255,0.03)',
-                  border: node.highlight ? '1px solid rgba(91,143,255,0.35)' : '1px solid var(--border)',
+                  background: node.highlight ? 'rgba(240,180,41,0.12)' : 'rgba(255,255,255,0.03)',
+                  border: node.highlight ? '1px solid rgba(240,180,41,0.35)' : '1px solid var(--border)',
                   color: node.highlight ? 'var(--blue)' : node.dim ? 'var(--muted)' : 'var(--ash)',
                   fontFamily: "'Archivo', sans-serif",
                   fontSize: '13px',
                   fontWeight: 800,
                   letterSpacing: '-0.01em',
                   whiteSpace: 'nowrap',
-                  boxShadow: node.highlight ? '0 0 24px rgba(91,143,255,0.12)' : 'none',
+                  boxShadow: node.highlight ? '0 0 24px rgba(240,180,41,0.12)' : 'none',
                 }}
               >
                 {node.label}
@@ -91,7 +91,7 @@ export default function NextlineAI() {
     >
       {/* Ambient orb */}
       <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(91,143,255,0.06) 0%, transparent 65%)', top: '-100px', right: '-100px', animation: 'orb-drift-1 20s ease-in-out infinite' }} />
+        <div style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,180,41,0.06) 0%, transparent 65%)', top: '-100px', right: '-100px', animation: 'orb-drift-1 20s ease-in-out infinite' }} />
       </div>
 
       {/* Product overview */}
@@ -109,7 +109,7 @@ export default function NextlineAI() {
         {/* Flow diagram */}
         <div className="card-shell reveal">
           <div className="card-inner" style={{ position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(91,143,255,0.5), transparent)' }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(240,180,41,0.5), transparent)' }} />
             <FlowDiagram />
           </div>
         </div>
@@ -225,7 +225,7 @@ export default function NextlineAI() {
                     className="reveal"
                     style={{ padding: '24px 0', borderBottom: '1px solid var(--border)' }}
                   >
-                    <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', color: '#f0f2ff', marginBottom: '8px' }}>
+                    <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: '8px' }}>
                       {point.title}
                     </div>
                     <p style={{ color: 'var(--ash)', fontSize: '14px', lineHeight: 1.75 }}>{point.body}</p>

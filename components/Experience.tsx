@@ -483,7 +483,7 @@ function StickyScroll() {
                   letterSpacing: '-0.04em',
                   lineHeight: 1.05,
                   marginBottom: '14px',
-                  color: '#f0f2ff',
+                  color: 'var(--ink)',
                 }}
               >
                 {exp.title}

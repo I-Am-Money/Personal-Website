@@ -76,7 +76,7 @@ function CourseBlock({ title, courses, note }: { title: string; courses: { cours
   return (
     <div className="card-shell reveal">
       <div className="card-inner" style={{ padding: '28px' }}>
-        <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', color: '#f0f2ff', marginBottom: '6px' }}>
+        <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--ink)', marginBottom: '6px' }}>
           {title}
         </div>
         {note && <div style={{ color: 'var(--muted)', fontSize: '11px', fontWeight: 600, marginBottom: '14px', letterSpacing: '0.04em' }}>{note}</div>}

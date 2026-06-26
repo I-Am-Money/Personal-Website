@@ -112,7 +112,7 @@ export default function Community() {
                 borderRadius: '12px',
               }}
             >
-              <div style={{ color: '#f0f2ff', fontFamily: "'Archivo', sans-serif", fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '10px' }}>
+              <div style={{ color: 'var(--ink)', fontFamily: "'Archivo', sans-serif", fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '10px' }}>
                 {item.title}
               </div>
               <p style={{ color: 'var(--ash)', fontSize: '13px', lineHeight: 1.75 }}>{item.body}</p>

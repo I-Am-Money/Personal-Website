@@ -28,7 +28,7 @@ export default function Mission() {
       ref={sectionRef}
       style={{ background: 'var(--bg)', borderTop: '1px solid var(--border)', padding: '140px 0', position: 'relative', overflow: 'hidden' }}
     >
-      <div aria-hidden="true" style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(91,143,255,0.05) 0%, transparent 65%)', top: '-200px', right: '-150px', pointerEvents: 'none', animation: 'orb-drift-1 22s ease-in-out infinite' }} />
+      <div aria-hidden="true" style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,180,41,0.05) 0%, transparent 65%)', top: '-200px', right: '-150px', pointerEvents: 'none', animation: 'orb-drift-1 22s ease-in-out infinite' }} />
 
       <div className="section-max" style={{ position: 'relative', zIndex: 1 }}>
         <span className="eyebrow reveal" style={{ marginBottom: '28px', display: 'inline-flex' }}>
@@ -74,7 +74,7 @@ export default function Mission() {
                 <p
                   key={i}
                   className="reveal"
-                  style={{ color: i === 0 ? '#f0f2ff' : 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.85, fontWeight: i === 0 ? 500 : 400 }}
+                  style={{ color: i === 0 ? 'var(--ink)' : 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.85, fontWeight: i === 0 ? 500 : 400 }}
                 >
                   {para}
                 </p>

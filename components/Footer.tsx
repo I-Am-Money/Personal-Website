@@ -30,7 +30,7 @@ export default function Footer() {
         style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}
       >
         <div>
-          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 900, letterSpacing: '-0.03em', color: '#f0f2ff', marginBottom: '4px' }}>
+          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: '4px' }}>
             Sahas Konreddy<span style={{ color: 'var(--blue)' }}>.</span>
           </div>
           <div style={{ color: 'var(--muted)', fontSize: '12px' }}>

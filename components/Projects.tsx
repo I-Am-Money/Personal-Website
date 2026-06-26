@@ -62,7 +62,7 @@ export default function Projects() {
               fontWeight: 800,
               letterSpacing: '-0.03em',
               lineHeight: 1.35,
-              color: '#f0f2ff',
+              color: 'var(--ink)',
               marginBottom: '20px',
             }}
           >
@@ -117,7 +117,7 @@ export default function Projects() {
                 </div>
               </div>
               <div>
-                <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.2vw, 26px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, color: '#f0f2ff', marginBottom: '14px' }}>
+                <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.2vw, 26px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, color: 'var(--ink)', marginBottom: '14px' }}>
                   {proj.title}
                 </h3>
                 <p style={{ color: 'var(--ash)', fontSize: '14px', lineHeight: 1.8 }}>

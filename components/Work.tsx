@@ -88,7 +88,7 @@ export default function Work() {
                 borderTop: '1px solid var(--border)',
                 transition: 'border-top-color 0.2s ease',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderTopColor = 'rgba(91,143,255,0.3)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderTopColor = 'rgba(240,180,41,0.3)' }}
               onMouseLeave={(e) => { e.currentTarget.style.borderTopColor = 'var(--border)' }}
             >
               <style>{`
@@ -113,7 +113,7 @@ export default function Work() {
                     fontWeight: 800,
                     letterSpacing: '-0.03em',
                     lineHeight: 1.1,
-                    color: '#f0f2ff',
+                    color: 'var(--ink)',
                     marginBottom: '14px',
                   }}
                 >
