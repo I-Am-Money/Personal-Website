@@ -55,31 +55,31 @@ export default function BookCall() {
             className="reveal"
             style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '28px' }}
           >
-            30 minutes,<br />
-            <span style={{ color: 'var(--ash)', fontWeight: 400 }}>no agenda required</span>
+            Schedule a conversation
           </h2>
 
           <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '16px', maxWidth: '420px' }}>
-            Whether you want to talk about NextLine AI, explore a collaboration, discuss nonprofit
-            operations, or just connect with someone doing uncommon things in high school, pick a
-            time that works.
+            If you are working on something and want a second opinion, exploring whether a
+            collaboration makes sense, or trying to understand how NextLine AI could apply to your
+            business — book time directly. The calendar below shows real availability.
           </p>
 
           <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '44px', maxWidth: '420px' }}>
-            Available most mornings before school and evenings on weekdays. Weekends by request.
+            Available most weekday mornings before 8am and evenings after 5pm. Weekends work on
+            a case-by-case basis — request one through the form and he will confirm within 24 hours.
           </p>
 
           <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
-              { icon: <Clock size={16} weight="bold" />, title: '30 minutes', desc: 'Focused. No filler.' },
-              { icon: <ChatText size={16} weight="bold" />, title: 'Any topic', desc: 'Startups, nonprofits, tech, school, life.' },
-              { icon: <Phone size={16} weight="bold" />, title: 'Video or phone', desc: 'Your call, confirmed on booking.' },
+              { icon: <Clock size={16} weight="bold" />, title: '30 minutes', desc: 'Come with something specific you want to work through — a question, a decision, or a problem you have been sitting on. The format is a conversation, not a presentation.' },
+              { icon: <ChatText size={16} weight="bold" />, title: 'Open agenda', desc: 'NextLine AI, Hands of Hope operations, civic tech, the mechanics of running a startup in high school, or something unrelated to any of those. No topic is off the table and no prep is required.' },
+              { icon: <Phone size={16} weight="bold" />, title: 'Video or phone', desc: 'Whichever format works better for you. The connection details come with your booking confirmation and can be changed up to 24 hours before.' },
             ].map((item) => (
               <div key={item.title} style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
                 <div
                   style={{
                     width: '36px', height: '36px', borderRadius: '10px',
-                    background: 'rgba(240,180,41,0.08)', border: '1px solid rgba(240,180,41,0.15)',
+                    background: 'rgba(122,82,50,0.08)', border: '1px solid rgba(122,82,50,0.15)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     color: 'var(--blue)', flexShrink: 0,
                   }}
@@ -101,7 +101,7 @@ export default function BookCall() {
             <div className="card-inner" style={{ overflow: 'hidden' }}>
               <div
                 className="calendly-inline-widget"
-                data-url="https://calendly.com/sahas-konreddy1/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=110f16&text_color=fdf8ee&primary_color=f0b429"
+                data-url="https://calendly.com/sahas-konreddy1/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=131e15&text_color=ede8d8&primary_color=7a5232"
                 style={{ minWidth: '280px', height: '680px' }}
               />
             </div>

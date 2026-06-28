@@ -50,19 +50,19 @@ export default function Navigation() {
             justifyContent: 'space-between',
             padding: '10px 10px 10px 24px',
             borderRadius: '999px',
-            border: `1px solid ${scrolled ? 'rgba(240,190,80,0.12)' : 'rgba(240,190,80,0.06)'}`,
-            background: scrolled ? 'rgba(9,8,12,0.92)' : 'rgba(9,8,12,0.5)',
+            border: `1px solid ${scrolled ? 'rgba(180,155,110,0.16)' : 'rgba(180,155,110,0.08)'}`,
+            background: scrolled ? 'rgba(13,22,16,0.94)' : 'rgba(13,22,16,0.55)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             transition: 'background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease',
-            boxShadow: scrolled ? '0 4px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(240,190,80,0.05)' : 'none',
+            boxShadow: scrolled ? '0 4px 24px rgba(0,0,0,0.5)' : 'none',
           }}
         >
           <a
             href="#top"
             style={{ fontFamily: "'Archivo', sans-serif", fontSize: '16px', fontWeight: 900, color: 'var(--ink)', textDecoration: 'none', letterSpacing: '-0.03em', flexShrink: 0 }}
           >
-            Sahas<span style={{ color: 'var(--blue)' }}>.</span>
+            Sahas
           </a>
 
           {/* Desktop links */}
@@ -72,7 +72,7 @@ export default function Navigation() {
                 key={l.href}
                 href={l.href}
                 style={{ color: 'var(--ash)', textDecoration: 'none', fontSize: '13px', fontWeight: 600, padding: '7px 14px', borderRadius: '999px', transition: 'color 0.18s ease, background 0.18s ease', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}
-                onMouseEnter={(e) => { const t = e.currentTarget; t.style.color = 'var(--ink)'; t.style.background = 'rgba(240,190,80,0.07)' }}
+                onMouseEnter={(e) => { const t = e.currentTarget; t.style.color = 'var(--ink)'; t.style.background = 'rgba(255,255,255,0.05)' }}
                 onMouseLeave={(e) => { const t = e.currentTarget; t.style.color = 'var(--ash)'; t.style.background = 'transparent' }}
               >
                 {l.label}
@@ -126,7 +126,7 @@ export default function Navigation() {
         className="md:hidden"
         style={{
           position: 'fixed', inset: 0, zIndex: 99,
-          background: 'rgba(9,8,12,0.97)',
+          background: 'rgba(13,22,16,0.98)',
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
           display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 32px',

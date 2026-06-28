@@ -53,7 +53,7 @@ export default function Community() {
           Nonprofit
         </span>
         <div
-          style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '80px', marginBottom: '72px', alignItems: 'end' }}
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', marginBottom: '72px', alignItems: 'end' }}
           className="comm-header"
         >
           <style>{`
@@ -69,9 +69,11 @@ export default function Community() {
             Running a nonprofit at 15
           </h2>
           <p className="reveal" style={{ color: 'var(--ash)', fontSize: '15px', lineHeight: 1.75 }}>
-            Hands of Hope Outreach operates across the Atlanta area tackling food insecurity,
-            access to basic necessities, and long-term community support. Sahas runs daily
-            operations as COO.
+            Hands of Hope Outreach distributes food, hygiene supplies, and household essentials
+            to families across the Atlanta metro. Sahas took over daily operations at 14 — managing
+            volunteer schedules, coordinating event logistics, handling budget allocation, and
+            keeping the organization running between donation cycles. It now reaches dozens of
+            families per event with no warehouse intermediary.
           </p>
         </div>
 

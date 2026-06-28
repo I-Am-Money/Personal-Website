@@ -38,15 +38,15 @@ function FlowDiagram() {
                 style={{
                   padding: '12px 20px',
                   borderRadius: '10px',
-                  background: node.highlight ? 'rgba(240,180,41,0.12)' : 'rgba(255,255,255,0.03)',
-                  border: node.highlight ? '1px solid rgba(240,180,41,0.35)' : '1px solid var(--border)',
+                  background: node.highlight ? 'rgba(122,82,50,0.12)' : 'rgba(255,255,255,0.03)',
+                  border: node.highlight ? '1px solid rgba(122,82,50,0.35)' : '1px solid var(--border)',
                   color: node.highlight ? 'var(--blue)' : node.dim ? 'var(--muted)' : 'var(--ash)',
                   fontFamily: "'Archivo', sans-serif",
                   fontSize: '13px',
                   fontWeight: 800,
                   letterSpacing: '-0.01em',
                   whiteSpace: 'nowrap',
-                  boxShadow: node.highlight ? '0 0 24px rgba(240,180,41,0.12)' : 'none',
+                  
                 }}
               >
                 {node.label}
@@ -87,29 +87,40 @@ export default function NextlineAI() {
     <section
       id="nextline"
       ref={sectionRef}
-      style={{ background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}
+      style={{ background: 'var(--bg)' }}
     >
-      {/* Ambient orb */}
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,180,41,0.06) 0%, transparent 65%)', top: '-100px', right: '-100px', animation: 'orb-drift-1 20s ease-in-out infinite' }} />
-      </div>
-
       {/* Product overview */}
-      <div className="section-max" style={{ paddingTop: '140px', paddingBottom: '100px', position: 'relative', zIndex: 1 }}>
+      <div className="section-max" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
         <span className="eyebrow reveal" style={{ marginBottom: '28px', display: 'inline-flex' }}>
           AI Startup
         </span>
-        <h2
-          className="reveal"
-          style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(36px, 5.5vw, 72px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, maxWidth: '660px', marginBottom: '64px' }}
+
+        {/* Split header — h2 left, description right */}
+        <div
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end', marginBottom: '64px' }}
+          className="nextline-header"
         >
-          AI that answers when<br />your business can't.
-        </h2>
+          <style>{`
+            @media (max-width: 768px) {
+              .nextline-header { grid-template-columns: 1fr !important; gap: 24px !important; }
+            }
+          `}</style>
+          <h2
+            className="reveal"
+            style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(36px, 5.5vw, 72px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0 }}
+          >
+            AI that answers when your business can't
+          </h2>
+          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.85 }}>
+            NextLine AI intercepts unanswered calls and handles them intelligently — so businesses
+            never lose a customer to voicemail again. Founded by Sahas, built to solve a specific
+            operational problem before chasing a valuation.
+          </p>
+        </div>
 
         {/* Flow diagram */}
         <div className="card-shell reveal">
-          <div className="card-inner" style={{ position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(240,180,41,0.5), transparent)' }} />
+          <div className="card-inner" style={{ overflow: 'hidden' }}>
             <FlowDiagram />
           </div>
         </div>
@@ -153,7 +164,7 @@ export default function NextlineAI() {
       {/* Deep dive */}
       <div style={{ borderTop: '1px solid var(--border)' }}>
         <div className="section-max" style={{ paddingTop: '100px', paddingBottom: '140px', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '80px', alignItems: 'start' }}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '80px', alignItems: 'start' }}
             className="nextline-dl-grid"
           >
             <style>{`

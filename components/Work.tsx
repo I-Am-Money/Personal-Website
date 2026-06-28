@@ -60,17 +60,28 @@ export default function Work() {
       style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', padding: '140px 0' }}
     >
       <div className="section-max">
-        {/* Header — stacked, no split */}
-        <div style={{ marginBottom: '72px' }}>
+        {/* Header — balanced split */}
+        <div
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end', marginBottom: '72px' }}
+          className="work-header"
+        >
+          <style>{`
+            @media (max-width: 768px) {
+              .work-header { grid-template-columns: 1fr !important; gap: 20px !important; }
+            }
+          `}</style>
           <h2
             className="reveal"
-            style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '16px' }}
+            style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0 }}
           >
             Four roles running at the same time
           </h2>
-          <p className="reveal" style={{ color: 'var(--ash)', fontSize: '15px', lineHeight: 1.75, maxWidth: '440px' }}>
-            No waiting for the right age or the right credential. Each one is a real responsibility
-            with real stakes.
+          <p className="reveal" style={{ color: 'var(--ash)', fontSize: '15px', lineHeight: 1.75 }}>
+            Four organizations, four sets of responsibilities running in parallel — not sequentially,
+            and not as resume lines. He took each of these on because the work existed: a nonprofit
+            short on operational capacity, a startup that needed building from scratch, a city with
+            an infrastructure gap, and a company that needed development help. Each one has real
+            people depending on the output.
           </p>
         </div>
 
@@ -88,7 +99,7 @@ export default function Work() {
                 borderTop: '1px solid var(--border)',
                 transition: 'border-top-color 0.2s ease',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderTopColor = 'rgba(240,180,41,0.3)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderTopColor = 'rgba(122,82,50,0.3)' }}
               onMouseLeave={(e) => { e.currentTarget.style.borderTopColor = 'var(--border)' }}
             >
               <style>{`

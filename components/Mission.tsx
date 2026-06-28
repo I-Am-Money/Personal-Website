@@ -28,7 +28,6 @@ export default function Mission() {
       ref={sectionRef}
       style={{ background: 'var(--bg)', borderTop: '1px solid var(--border)', padding: '140px 0', position: 'relative', overflow: 'hidden' }}
     >
-      <div aria-hidden="true" style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,180,41,0.05) 0%, transparent 65%)', top: '-200px', right: '-150px', pointerEvents: 'none', animation: 'orb-drift-1 22s ease-in-out infinite' }} />
 
       <div className="section-max" style={{ position: 'relative', zIndex: 1 }}>
         <span className="eyebrow reveal" style={{ marginBottom: '28px', display: 'inline-flex' }}>
@@ -36,7 +35,7 @@ export default function Mission() {
         </span>
 
         <div
-          style={{ display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: '80px', alignItems: 'start' }}
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}
           className="mission-grid"
         >
           <style>{`

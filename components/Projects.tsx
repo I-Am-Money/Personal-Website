@@ -29,16 +29,26 @@ export default function Projects() {
       style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', padding: '140px 0' }}
     >
       <div className="section-max">
-        {/* Header */}
-        <div style={{ marginBottom: '64px' }}>
+        {/* Header — balanced split */}
+        <div
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end', marginBottom: '64px' }}
+          className="projects-header"
+        >
+          <style>{`
+            @media (max-width: 768px) {
+              .projects-header { grid-template-columns: 1fr !important; gap: 20px !important; }
+            }
+          `}</style>
           <h2
             className="reveal"
-            style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '16px' }}
+            style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0 }}
           >
             Work that leaves something behind
           </h2>
-          <p className="reveal" style={{ color: 'var(--ash)', fontSize: '15px', lineHeight: 1.75, maxWidth: '440px' }}>
-            Independent projects with real stakeholders, real constraints, and real outcomes.
+          <p className="reveal" style={{ color: 'var(--ash)', fontSize: '15px', lineHeight: 1.75 }}>
+            Independent projects with real stakeholders, real constraints, and real consequences.
+            Not school assignments — projects taken to city officials, built with city infrastructure,
+            and evaluated on whether they actually worked.
           </p>
         </div>
 

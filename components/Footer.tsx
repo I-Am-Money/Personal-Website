@@ -31,7 +31,7 @@ export default function Footer() {
       >
         <div>
           <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: '4px' }}>
-            Sahas Konreddy<span style={{ color: 'var(--blue)' }}>.</span>
+            Sahas Konreddy
           </div>
           <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
             &copy; {year} &nbsp;&bull;&nbsp; Alpharetta, GA
