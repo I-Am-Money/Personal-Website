@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <main id="top">
+      <main>
         <Hero />
         <NextlineAI />
         <Work />

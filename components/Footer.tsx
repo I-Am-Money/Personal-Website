@@ -1,75 +1,98 @@
 'use client'
 
+const FOOTER_LINKS = [
+  { label: 'NextLine AI',  href: '#nextline' },
+  { label: 'Work',         href: '#work' },
+  { label: 'Community',    href: '#community' },
+  { label: 'Projects',     href: '#projects' },
+  { label: 'About',        href: '#mission' },
+  { label: 'Book a call',  href: '#book' },
+]
+
+const CONTACT_LINKS = [
+  { label: 'sahas.konreddy1@gmail.com', href: 'mailto:sahas.konreddy1@gmail.com' },
+  { label: '678-674-6812',              href: 'tel:6786746812' },
+  { label: 'LinkedIn',                  href: 'https://www.linkedin.com/in/sahas-konreddy-ba0633344', external: true },
+]
+
 export default function Footer() {
   const year = new Date().getFullYear()
 
-  const linkStyle = {
-    color: 'var(--muted)',
-    textDecoration: 'none',
-    fontSize: '13px',
-    transition: 'color 0.2s ease',
-  }
-
-  const hover = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.currentTarget.style.color = 'var(--ash)'
-  }
-  const leave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.currentTarget.style.color = 'var(--muted)'
-  }
-
   return (
-    <footer
-      style={{
-        padding: '40px 0 32px',
-        borderTop: '1px solid var(--border)',
-        background: 'var(--bg)',
-      }}
-    >
-      <div
-        className="section-max"
-        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}
-      >
+    <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--bg)' }}>
+      {/* Top row */}
+      <div className="section-max" style={{ padding: '64px 32px 40px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
         <div>
-          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: '4px' }}>
+          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: '20px', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--ink)', marginBottom: '10px' }}>
             Sahas Konreddy
           </div>
-          <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
-            &copy; {year} &nbsp;&bull;&nbsp; Alpharetta, GA
+          <p style={{ color: 'var(--muted)', fontSize: '13px', lineHeight: 1.75, maxWidth: '320px' }}>
+            Student, COO, and founder. Building things that work for people who need them.
+            Based in Alpharetta, Georgia.
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px 48px' }}>
+          <div>
+            <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '14px' }}>Navigation</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {FOOTER_LINKS.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  style={{ color: 'var(--ash)', textDecoration: 'none', fontSize: '13px', fontWeight: 500, transition: 'color 0.18s ease' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ink)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ash)')}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '14px' }}>Contact</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {CONTACT_LINKS.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target={l.external ? '_blank' : undefined}
+                  rel={l.external ? 'noopener noreferrer' : undefined}
+                  style={{ color: 'var(--ash)', textDecoration: 'none', fontSize: '13px', fontWeight: 500, transition: 'color 0.18s ease' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ink)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--ash)')}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '24px', alignItems: 'center', flexWrap: 'wrap' }}>
-          <a href="mailto:sahas.konreddy1@gmail.com" style={linkStyle} onMouseEnter={hover} onMouseLeave={leave}>
-            sahas.konreddy1@gmail.com
-          </a>
-          <a href="tel:6786746812" style={linkStyle} onMouseEnter={hover} onMouseLeave={leave}>
-            678-674-6812
-          </a>
-          <a
-            href="https://www.linkedin.com/in/sahas-konreddy-ba0633344"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ ...linkStyle, display: 'inline-flex', alignItems: 'center', gap: '5px' }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--blue)' }}
-            onMouseLeave={leave}
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-            LinkedIn
-          </a>
-          <a
-            href="https://calendly.com/sahas-konreddy1/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={linkStyle}
-            onMouseEnter={hover}
-            onMouseLeave={leave}
-          >
-            Book a call
-          </a>
+        <style>{`
+          @media (max-width: 768px) {
+            footer .section-max > div:first-child,
+            footer .section-max > div:last-child {
+              grid-column: 1 / -1 !important;
+            }
+          }
+        `}</style>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="section-max" style={{ padding: '20px 32px 28px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ color: 'var(--muted)', fontSize: '12px' }}>
+          &copy; {year} Sahas Konreddy &nbsp;&bull;&nbsp; Alpharetta, GA
         </div>
+        <a
+          href="#top"
+          style={{ color: 'var(--muted)', fontSize: '12px', textDecoration: 'none', transition: 'color 0.18s ease' }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ash)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+        >
+          Back to top ↑
+        </a>
       </div>
     </footer>
   )

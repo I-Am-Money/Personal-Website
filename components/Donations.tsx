@@ -4,29 +4,34 @@ import { Lock, ArrowRight } from '@phosphor-icons/react'
 
 const PRESET_AMOUNTS = [5, 10, 25, 50, 100]
 
+const ALLOCATION = [
+  { label: 'Hands of Hope', desc: 'Food drives, supply runs, and community outreach across Atlanta.' },
+  { label: 'NextLine AI',   desc: 'Infrastructure and tooling for building the product.' },
+]
+
 export default function Donations() {
-  const [selected, setSelected] = useState<number>(25)
-  const [custom, setCustom]     = useState('')
-  const [loading, setLoading]   = useState(false)
-  const [error, setError]       = useState('')
+  const [selected, setSelected] = useState(25)
+  const [custom,   setCustom]   = useState('')
+  const [loading,  setLoading]  = useState(false)
+  const [error,    setError]    = useState('')
   const sectionRef              = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           el.querySelectorAll('.reveal, .reveal-scale').forEach((item, i) => {
             setTimeout(() => item.classList.add('visible'), i * 100)
           })
-          observer.unobserve(el)
+          io.unobserve(el)
         }
       },
       { threshold: 0.08 }
     )
-    observer.observe(el)
-    return () => observer.disconnect()
+    io.observe(el)
+    return () => io.disconnect()
   }, [])
 
   const effectiveAmount = custom ? parseFloat(custom) : selected
@@ -41,9 +46,9 @@ export default function Donations() {
     setLoading(true)
     try {
       const res  = await fetch('/api/create-checkout-session', {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: Math.round(amount * 100) }),
+        body:    JSON.stringify({ amount: Math.round(amount * 100) }),
       })
       const data = await res.json()
       if (!res.ok) { setError(data.error ?? 'Something went wrong.'); return }
@@ -59,42 +64,32 @@ export default function Donations() {
     <section
       id="support"
       ref={sectionRef}
-      style={{ padding: '140px 0', background: 'var(--surface)', borderTop: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}
+      style={{ padding: '140px 0', background: 'var(--surface)', borderTop: '1px solid var(--border)' }}
     >
-
-      <div className="section-max donate-layout" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }} className="section-max dn-grid">
         <style>{`
           @media (max-width: 768px) {
-            .donate-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+            .dn-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
           }
         `}</style>
 
         {/* Left */}
         <div>
-          <h2
-            className="reveal"
-            style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '28px' }}
-          >
+          <h2 className="reveal" style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: '28px' }}>
             Back the work
           </h2>
 
-          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '16px', maxWidth: '400px' }}>
-            Contributions go toward two things: keeping Hands of Hope funded (outreach events,
-            supply drives, community programs) and the early-stage costs of building NextLine AI.
+          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '16px' }}>
+            Contributions go toward two things: keeping Hands of Hope funded — outreach events,
+            supply drives, and community programs — and the early-stage costs of building NextLine AI.
           </p>
-          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '40px', maxWidth: '400px' }}>
+          <p className="reveal" style={{ color: 'var(--ash)', fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.8, marginBottom: '40px' }}>
             No middlemen. A $10 contribution goes $10 toward something real.
           </p>
 
-          <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '0', borderTop: '1px solid var(--border)' }}>
-            {[
-              { label: 'Hands of Hope', desc: 'Food drives, supply runs, and community outreach across Atlanta.' },
-              { label: 'NextLine AI', desc: 'Infrastructure and tooling for building the product.' },
-            ].map((item) => (
-              <div
-                key={item.label}
-                style={{ padding: '20px 0', borderBottom: '1px solid var(--border)' }}
-              >
+          <div className="reveal" style={{ borderTop: '1px solid var(--border)' }}>
+            {ALLOCATION.map((item) => (
+              <div key={item.label} style={{ padding: '20px 0', borderBottom: '1px solid var(--border)' }}>
                 <div style={{ color: 'var(--blue)', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>
                   {item.label}
                 </div>
@@ -107,11 +102,15 @@ export default function Donations() {
         {/* Right: donation widget */}
         <div className="reveal-scale">
           <div className="card-shell">
-            <div className="card-inner" style={{ padding: '32px', position: 'relative', overflow: 'hidden' }}>
+            <div className="card-inner" style={{ padding: '32px' }}>
+              <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '6px' }}>
+                Choose an amount
+              </h3>
+              <p style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '24px' }}>
+                Processed securely via Stripe. No account needed.
+              </p>
 
-              <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: '17px', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '6px' }}>Choose an amount</h3>
-              <p style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '24px' }}>Processed securely via Stripe. No account needed.</p>
-
+              {/* Preset amounts */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '14px' }}>
                 {PRESET_AMOUNTS.map((amt) => (
                   <button
@@ -124,28 +123,35 @@ export default function Donations() {
                 ))}
               </div>
 
+              {/* Custom input */}
               <div style={{ position: 'relative', marginBottom: '20px' }}>
                 <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: custom ? 'var(--ink)' : 'var(--muted)', fontSize: '15px', fontWeight: 700, pointerEvents: 'none' }}>$</span>
                 <input
-                  type="number" min="1" max="1000" step="1" placeholder="Custom amount"
+                  type="number"
+                  min="1"
+                  max="1000"
+                  step="1"
+                  placeholder="Custom amount"
                   value={custom}
                   onChange={(e) => { setCustom(e.target.value); setError('') }}
                   style={{
-                    width: '100%', padding: '11px 14px 11px 28px',
+                    width: '100%',
+                    padding: '11px 14px 11px 28px',
                     background: 'rgba(255,255,255,0.04)',
                     border: `1px solid ${custom ? 'var(--blue)' : 'var(--border)'}`,
-                    borderRadius: '10px', color: 'var(--ink)', fontSize: '15px', fontWeight: 700,
-                    outline: 'none', transition: 'border-color 0.2s ease',
+                    borderRadius: '10px',
+                    color: 'var(--ink)',
+                    fontSize: '15px',
+                    fontWeight: 700,
+                    outline: 'none',
+                    transition: 'border-color 0.2s ease',
                   }}
                 />
               </div>
 
+              {/* Total preview */}
               {effectiveAmount > 0 && !isNaN(effectiveAmount) && (
-                <div style={{
-                  padding: '10px 14px', background: 'rgba(122,82,50,0.07)',
-                  border: '1px solid rgba(122,82,50,0.14)', borderRadius: '8px',
-                  marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                }}>
+                <div style={{ padding: '10px 14px', background: 'rgba(122,82,50,0.07)', border: '1px solid rgba(122,82,50,0.14)', borderRadius: '8px', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ color: 'var(--ash)', fontSize: '13px' }}>Total</span>
                   <span style={{ color: 'var(--blue)', fontSize: '17px', fontWeight: 800, fontFamily: "'Archivo', sans-serif" }}>
                     ${effectiveAmount.toFixed(2)}
@@ -153,12 +159,14 @@ export default function Donations() {
                 </div>
               )}
 
+              {/* Error */}
               {error && (
                 <div style={{ padding: '10px 14px', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)', borderRadius: '8px', color: '#f87171', fontSize: '13px', marginBottom: '14px' }}>
                   {error}
                 </div>
               )}
 
+              {/* Donate button */}
               <button
                 onClick={handleDonate}
                 disabled={loading}
@@ -175,9 +183,7 @@ export default function Donations() {
                 ) : (
                   <>
                     Donate{effectiveAmount > 0 && !isNaN(effectiveAmount) ? ` $${effectiveAmount}` : ''}
-                    <span className="btn-icon-wrap">
-                      <ArrowRight size={13} weight="bold" />
-                    </span>
+                    <span className="btn-icon-wrap"><ArrowRight size={13} weight="bold" /></span>
                   </>
                 )}
               </button>

@@ -1,26 +1,23 @@
 'use client'
 import { useEffect, useRef } from 'react'
 
-const interests = [
+const INTERESTS = [
   {
-    title: 'Athletics',
-    body: 'Competition has a way of teaching things that no classroom does. The discipline, the loss, the improvement that only comes from showing up consistently.',
-    seed: 'track-athletics',
-    aspect: '16/7',
+    title:    'Athletics',
+    body:     'Competition has a way of teaching things that no classroom does. The discipline, the loss, the improvement that only comes from showing up consistently.',
+    seed:     'track-athletics',
     featured: true,
   },
   {
-    title: 'Films & TV',
-    body: 'Telugu cinema, the occasional anime, and anything that tells a story worth telling. Good storytelling is a skill he studies whether he is watching or building.',
-    seed: 'cinema-dark',
-    aspect: '4/3',
+    title:    'Films & TV',
+    body:     'Telugu cinema, the occasional anime, and anything that tells a story worth telling. Good storytelling is a skill he studies whether he is watching or building.',
+    seed:     'cinema-dark',
     featured: false,
   },
   {
-    title: 'Learning',
-    body: 'AI research, cybersecurity, how cities function, how nonprofits fail, how startups survive the first year. Reading for utility as much as for curiosity.',
-    seed: 'books-study',
-    aspect: '4/3',
+    title:    'Learning',
+    body:     'AI research, cybersecurity, how cities function, how nonprofits fail, how startups survive the first year. Reading for utility as much as for curiosity.',
+    seed:     'books-study',
     featured: false,
   },
 ]
@@ -31,23 +28,23 @@ export default function Interests() {
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           el.querySelectorAll('.reveal').forEach((item, i) => {
             setTimeout(() => item.classList.add('visible'), i * 100)
           })
-          observer.unobserve(el)
+          io.unobserve(el)
         }
       },
       { threshold: 0.08 }
     )
-    observer.observe(el)
-    return () => observer.disconnect()
+    io.observe(el)
+    return () => io.disconnect()
   }, [])
 
-  const featured = interests[0]
-  const rest = interests.slice(1)
+  const featured = INTERESTS[0]
+  const rest     = INTERESTS.slice(1)
 
   return (
     <section
@@ -56,20 +53,16 @@ export default function Interests() {
       style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', padding: '140px 0' }}
     >
       <div className="section-max">
-        {/* Header — balanced split */}
-        <div
-          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end', marginBottom: '64px' }}
-          className="interests-header"
-        >
+        {/* Split header */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end', marginBottom: '64px' }} className="in-hdr">
           <style>{`
             @media (max-width: 768px) {
-              .interests-header { grid-template-columns: 1fr !important; gap: 20px !important; }
+              .in-hdr     { grid-template-columns: 1fr !important; gap: 20px !important; }
+              .in-feat    { grid-template-columns: 1fr !important; }
+              .in-rest    { grid-template-columns: 1fr !important; }
             }
           `}</style>
-          <h2
-            className="reveal"
-            style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0 }}
-          >
+          <h2 className="reveal" style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.0 }}>
             What he does when he is not working
           </h2>
           <p className="reveal" style={{ color: 'var(--ash)', fontSize: '15px', lineHeight: 1.75 }}>
@@ -80,26 +73,9 @@ export default function Interests() {
           </p>
         </div>
 
-        {/* Featured card — full width, horizontal */}
-        <div
-          className="reveal"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1.6fr 1fr',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            border: '1px solid var(--border)',
-            marginBottom: '12px',
-            background: 'rgba(255,255,255,0.02)',
-          }}
-        >
-          <style>{`
-            @media (max-width: 768px) {
-              .interest-featured { grid-template-columns: 1fr !important; }
-              .interest-row { grid-template-columns: 1fr !important; }
-            }
-          `}</style>
-          <div className="interest-featured" style={{ display: 'contents' }}>
+        {/* Featured card — image left, text right */}
+        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border)', marginBottom: '12px', background: 'rgba(255,255,255,0.02)' }}>
+          <div className="in-feat" style={{ display: 'contents' }}>
             <img
               src={`https://picsum.photos/seed/${featured.seed}/1000/500`}
               alt={featured.title}
@@ -114,22 +90,10 @@ export default function Interests() {
           </div>
         </div>
 
-        {/* Two cards side-by-side */}
-        <div
-          className="interest-row"
-          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}
-        >
+        {/* Two cards */}
+        <div className="in-rest" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
           {rest.map((item) => (
-            <div
-              key={item.title}
-              className="reveal"
-              style={{
-                borderRadius: '16px',
-                overflow: 'hidden',
-                border: '1px solid var(--border)',
-                background: 'rgba(255,255,255,0.02)',
-              }}
-            >
+            <div key={item.title} className="reveal" style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.02)' }}>
               <img
                 src={`https://picsum.photos/seed/${item.seed}/800/400`}
                 alt={item.title}

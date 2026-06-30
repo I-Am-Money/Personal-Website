@@ -306,12 +306,12 @@ h1, h2, h3 {
 .amount-btn:hover {
   border-color: var(--blue);
   color: var(--blue);
-  background: rgba(91,143,255,0.06);
+  background: rgba(122,82,50,0.06);
 }
 
 .amount-btn.selected {
   border-color: var(--blue);
-  background: rgba(91,143,255,0.12);
+  background: rgba(122,82,50,0.12);
   color: var(--blue);
 }
 

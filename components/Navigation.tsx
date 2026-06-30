@@ -1,19 +1,18 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { CalendarBlank } from '@phosphor-icons/react'
 
-const links = [
+const NAV_LINKS = [
   { label: 'NextLine AI', href: '#nextline' },
-  { label: 'Work', href: '#work' },
-  { label: 'Community', href: '#community' },
-  { label: 'Mission', href: '#mission' },
-  { label: 'Contact', href: 'mailto:sahas.konreddy1@gmail.com' },
+  { label: 'Work',        href: '#work' },
+  { label: 'Community',   href: '#community' },
+  { label: 'Projects',    href: '#projects' },
+  { label: 'About',       href: '#mission' },
 ]
 
 export default function Navigation() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const sentinelRef = useRef<HTMLDivElement>(null)
+  const [scrolled,  setScrolled]  = useState(false)
+  const [menuOpen,  setMenuOpen]  = useState(false)
 
   useEffect(() => {
     const sentinel = document.createElement('div')
@@ -50,35 +49,62 @@ export default function Navigation() {
             justifyContent: 'space-between',
             padding: '10px 10px 10px 24px',
             borderRadius: '999px',
-            border: `1px solid ${scrolled ? 'rgba(180,155,110,0.16)' : 'rgba(180,155,110,0.08)'}`,
-            background: scrolled ? 'rgba(13,22,16,0.94)' : 'rgba(13,22,16,0.55)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
+            border: `1px solid ${scrolled ? 'rgba(180,155,110,0.18)' : 'rgba(180,155,110,0.08)'}`,
+            background: scrolled ? 'rgba(13,22,16,0.96)' : 'rgba(13,22,16,0.6)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             transition: 'background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease',
-            boxShadow: scrolled ? '0 4px 24px rgba(0,0,0,0.5)' : 'none',
+            boxShadow: scrolled ? '0 4px 32px rgba(0,0,0,0.55)' : 'none',
           }}
         >
+          {/* Logo */}
           <a
             href="#top"
-            style={{ fontFamily: "'Archivo', sans-serif", fontSize: '16px', fontWeight: 900, color: 'var(--ink)', textDecoration: 'none', letterSpacing: '-0.03em', flexShrink: 0 }}
+            style={{
+              fontFamily: "'Archivo', sans-serif",
+              fontSize: '16px',
+              fontWeight: 900,
+              color: 'var(--ink)',
+              textDecoration: 'none',
+              letterSpacing: '-0.03em',
+              flexShrink: 0,
+            }}
           >
             Sahas
           </a>
 
           {/* Desktop links */}
           <div className="hidden md:flex" style={{ alignItems: 'center', gap: '2px' }}>
-            {links.map((l) => (
+            {NAV_LINKS.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                style={{ color: 'var(--ash)', textDecoration: 'none', fontSize: '13px', fontWeight: 600, padding: '7px 14px', borderRadius: '999px', transition: 'color 0.18s ease, background 0.18s ease', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}
-                onMouseEnter={(e) => { const t = e.currentTarget; t.style.color = 'var(--ink)'; t.style.background = 'rgba(255,255,255,0.05)' }}
-                onMouseLeave={(e) => { const t = e.currentTarget; t.style.color = 'var(--ash)'; t.style.background = 'transparent' }}
+                style={{
+                  color: 'var(--ash)',
+                  textDecoration: 'none',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  padding: '7px 14px',
+                  borderRadius: '999px',
+                  transition: 'color 0.18s ease, background 0.18s ease',
+                  letterSpacing: '-0.01em',
+                  whiteSpace: 'nowrap',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--ink)'
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.05)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--ash)'
+                  e.currentTarget.style.background = 'transparent'
+                }}
               >
                 {l.label}
               </a>
             ))}
+
             <div style={{ width: '1px', height: '18px', background: 'var(--border)', margin: '0 8px' }} />
+
             <a href="#support" className="btn-secondary" style={{ padding: '7px 7px 7px 14px', fontSize: '13px' }}>
               Fund me
               <span className="btn-icon-wrap" style={{ width: '26px', height: '26px', marginLeft: '8px' }}>
@@ -87,6 +113,7 @@ export default function Navigation() {
                 </svg>
               </span>
             </a>
+
             <a href="#book" className="btn-primary" style={{ padding: '7px 7px 7px 16px', fontSize: '13px', marginLeft: '4px' }}>
               Book a call
               <span className="btn-icon-wrap" style={{ width: '26px', height: '26px', marginLeft: '8px' }}>
@@ -98,17 +125,34 @@ export default function Navigation() {
           {/* Mobile hamburger */}
           <button
             className="md:hidden"
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
-            style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '50%', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--ink)', flexShrink: 0 }}
+            style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: '50%',
+              width: '38px',
+              height: '38px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              color: 'var(--ink)',
+              flexShrink: 0,
+            }}
           >
             <div style={{ position: 'relative', width: '16px', height: '12px' }}>
               {[0, 5, 10].map((top, i) => (
                 <span
                   key={i}
                   style={{
-                    position: 'absolute', left: 0, width: '100%', height: '1.5px', background: 'currentColor', borderRadius: '2px',
+                    position: 'absolute',
+                    left: 0,
+                    width: '100%',
+                    height: '1.5px',
+                    background: 'currentColor',
+                    borderRadius: '2px',
                     top: menuOpen && i !== 1 ? '5px' : `${top}px`,
                     opacity: menuOpen && i === 1 ? 0 : 1,
                     transform: menuOpen && i === 0 ? 'rotate(45deg)' : menuOpen && i === 2 ? 'rotate(-45deg)' : 'none',
@@ -125,17 +169,23 @@ export default function Navigation() {
       <div
         className="md:hidden"
         style={{
-          position: 'fixed', inset: 0, zIndex: 99,
+          position: 'fixed',
+          inset: 0,
+          zIndex: 99,
           background: 'rgba(13,22,16,0.98)',
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
-          display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 32px',
-          opacity: menuOpen ? 1 : 0, pointerEvents: menuOpen ? 'auto' : 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '0 32px',
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? 'auto' : 'none',
           transition: 'opacity 0.28s ease',
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          {[...links, { label: 'Fund me', href: '#support' }, { label: 'Book a call', href: '#book' }].map((l, i) => (
+          {[...NAV_LINKS, { label: 'Fund me', href: '#support' }, { label: 'Book a call', href: '#book' }].map((l, i) => (
             <a
               key={l.href + i}
               href={l.href}
